@@ -43,7 +43,7 @@ print(mean(is.na(emmissionTot)))   #make sure there are no NAs
 emByYrBalt <- sapply(split(emissionsBalt,baltimore$year), sum)
 years <- unique(baltimore$year)
 
-png(filename = "plot1.png")
+png(filename = "plot2.png")
 
 bp <- barplot(emByYrBalt, col = rgb( 0,0.5,0.5,0.2),
               xlab = "Year",
@@ -53,3 +53,9 @@ bp <- barplot(emByYrBalt, col = rgb( 0,0.5,0.5,0.2),
 text(bp,emByYrBalt*0.9,labels = round(emByYrBalt,digits = 0))
 
 dev.off()
+
+#Q3.
+# Of the four types of sources indicated by the type(point, nonpoint, onroad, nonroad)
+# variable, which of these four sources have seen decreases in emissions from
+# 1999–2008 for Baltimore City? Which have seen increases in emissions from 1999–2008?
+# Use the ggplot2 plotting system to make a plot answer this question.
