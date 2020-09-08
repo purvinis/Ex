@@ -25,8 +25,13 @@ png(filename = "plot1.png")
 bp <- barplot(emByYr, col = rgb( .5,0,.5,.2),
      xlab = "Year",
      ylab = "tons",
-     main = "Total PM2.5 emission from all sources by year")
+     main = "Total PM2.5 emission in the U.S. \n from all sources by year")
 text(bp,emByYr*0.9,labels = round(emByYr,digits = 2))
 
 dev.off()
 
+# Q2.
+# Have total emissions from PM2.5 decreased in the Baltimore City, Maryland 
+# (fips == "24510"\color{red}{\verb|fips == "24510"|}fips == "24510") 
+# from 1999 to 2008? Use the base plotting system to make a plot answering 
+# this question.
