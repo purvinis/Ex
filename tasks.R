@@ -61,10 +61,30 @@ dev.off()
 # Use the ggplot2 plotting system to make a plot answer this question.
 
 baltimore <- subset(NEI,NEI$fips=="24510")
-baltTypeSums <- baltimore %>% group_by(type) %>%
-  summarise(Emissions = sum(Emissions))
+years <- unique(baltimore$year)
+types <- c("Point","NonPoint","OnRoad","NonRoad")
+bpoints <- baltimore %>% select(type,year,Emissions) %>% group_by(type) %>%
+  filter(type == "POINT")
+Point <- as.data.frame(sapply(split(bpoints$Emissions,bpoints$year),sum))
   
+bnonpoints <- baltimore %>% select(type,year,Emissions) %>% group_by(type) %>%
+  filter(type == "NONPOINT")
+NonPoint <- as.data.frame(sapply(split(bnonpoints$Emissions,bnonpoints$year),sum))
 
-p3 <- ggplot(baltByType, aes(year,Emissions))
-p3 +geom_point(colour = rainbow(4)) + facet_grid(rows = vars(type))
+bonroad <- baltimore %>% select(type,year,Emissions) %>% group_by(type) %>%
+  filter(type == "ON-ROAD")
+OnRoad <- as.data.frame(sapply(split(bonroad$Emissions,bonroad$year),sum))
+
+bNonroad <- baltimore %>% select(type,year,Emissions) %>% group_by(type) %>%
+  filter(type == "NON-ROAD")
+NonRoad <- as.data.frame(sapply(split(bNonroad$Emissions,bNonroad$year),sum))
+
+q3data <-cbind(c(1999,2002,2005,2008),Point,NonPoint,OnRoad,NonRoad)
+
+ggplot(q3data) +
+  geom_col(data=q3data, aes(V1,Point))+
+  geom_col(data=q3data, aes(V1,NonPoint))+
+  geom_col(data=q3data, aes(V1,OnRoad))+
+  geom_col(data=q3data, aes(V1,NonRoad))
+
 
