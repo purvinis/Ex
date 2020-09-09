@@ -20,7 +20,7 @@ baltimore <- baltimore %>% select(type,year,Emissions)
 ggplot(baltimore, aes(year, Emissions)) +
   geom_point(color = "orange", size = 3, alpha = .4) +
   facet_wrap(facets = vars(type), nrow = 2, scales = "free_y") +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "loess")
   
   
   
