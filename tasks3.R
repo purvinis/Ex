@@ -38,7 +38,7 @@ sumData$year <-as.integer(sumData$year)
 sumData$Emissions <- as.integer(sumData$Emissions)
 
 #make scatter plot of Emissions with barchart of totals overlayed:
-ggplot(baltimore, aes(year, Emissions)) +
+p3 <- ggplot(baltimore, aes(year, Emissions)) +
   geom_point(color = "orange", size = 3, alpha = .7) +
   geom_col(data = sumData,color = "green", alpha = 0.1, width = 1.1) +
   facet_wrap(facets = vars(type), nrow = 2,scales = "free_y")+
@@ -48,7 +48,9 @@ ggplot(baltimore, aes(year, Emissions)) +
        caption = "Scatter plot data is from individual sensors.Green bars
        indicate year totals, in tons.")
 
- 
+png('plot3.png',width=480,height=480,units="px",bg = "transparent")
+print(p3)
+dev.off()
 
 
 
