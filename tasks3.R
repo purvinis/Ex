@@ -17,35 +17,36 @@ types <- unique(baltimore$type)
 
 baltimore <- baltimore %>% select(type,year,Emissions)
 
+#function to sum the emissions by year and type
 yearSum <- function(t,y){
   s <- baltimore %>% subset(year == y) %>%
-    subset(type == t) %>% select(Emissions) %>% sum
-  return(as.numeric(s)) }
+    subset(type == t) %>% select(Emissions) %>% sum %>% as.numeric
+  return(s) }
 
-sumData <- data.frame()
+#find the emission totals by year and type
+sumData <- data.frame(stringsAsFactors = FALSE)
 for(t in types)
   {
   for (y in years)
   {
-    arow <- c(t,y,yearSum(t,y))
+    arow <- c(t,as.integer(y),yearSum(t,y))
     sumData <-rbind(sumData,arow)
   }
 }
 colnames(sumData) <- c("type","year","Emissions")
-sumData$type <- transform(sumData$type,)
+sumData$year <-as.integer(sumData$year)
+sumData$Emissions <- as.integer(sumData$Emissions)
 
-ggplot(sumData, aes(year, Emissions)) +
-  geom_col(color = "orange",alpha = .4) +
-  facet_wrap(facets = vars(type), nrow = 2,scales = "free_y")
-
+#make scatter plot of Emissions with barchart of totals overlayed:
 ggplot(baltimore, aes(year, Emissions)) +
-  geom_point(color = "orange", size = 3, alpha = .4) +
-  geom_point(data = sumData,color = "green", alpha = 0.1) +
-  facet_wrap(facets = vars(type), nrow = 2) +
-  scale_x_continuous(limits=c(0, 1600), breaks=c(0, 400, 800, 1200,1600))
+  geom_point(color = "orange", size = 3, alpha = .7) +
+  geom_col(data = sumData,color = "green", alpha = 0.1, width = 1.1) +
+  facet_wrap(facets = vars(type), nrow = 2,scales = "free_y")+
+  scale_x_continuous("Year",breaks = c(1999,2002,2005,2008),labels = years)
+ 
 
 
-  geom_smooth(method = "lm")
+
   
 
 
