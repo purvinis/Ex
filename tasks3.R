@@ -42,9 +42,12 @@ p3 <- ggplot(baltimore, aes(year, Emissions)) +
   geom_point(color = "orange", size = 3, alpha = .7) +
   geom_col(data = sumData,color = "green", alpha = 0.1, width = 1.1) +
   facet_wrap(facets = vars(type), nrow = 2,scales = "free_y")+
+  geom_smooth(method = "lm")+
   scale_x_continuous("Year",breaks = c(1999,2002,2005,2008),labels = years)+
   labs(title = "PM2.5 emissions in Baltimore by year and type",
-       subtitle = "Non-road, nonpoint, on-road sensors show net decrease in PM2.5.",
+       subtitle = "Non-road, nonpoint, on-road sensors show net decrease in PM2.5.
+       Point sensors show increase 1999-2005, but decrease again in 2008.
+       Linear model shows that all 4 sensor systems decrease in emissions.",
        caption = "Scatter plot data is from individual sensors.Green bars
        indicate year totals, in tons.")
 

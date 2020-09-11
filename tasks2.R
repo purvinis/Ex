@@ -23,7 +23,7 @@ bp <- barplot(emByYrBalt, col = rgb( 0,0.5,0.5,0.2),
               xlab = "Year",
               ylab = "tons",
               main = "Total PM2.5 emission in Baltimore \n from all sources by year",
-              sub = "Total PM2.5 in Baltimore varied from 1999 to 2008.")
+              sub = "Total PM2.5 in Baltimore decreased from 1999 to 2008.")
 text(bp,emByYrBalt*0.9,labels = round(emByYrBalt,digits = 0))
 
 dev.off()

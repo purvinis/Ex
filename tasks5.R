@@ -26,7 +26,7 @@ motorVehicleData <- baltimore %>% filter(SCC %in% mobileSCC)%>%
   select(year,Emissions)
 years <- unique(motorVehicleData$year)
 
-# find averages per year, because data values are too widely spred to see trends:
+# find averages per year, because data values are too widely spread to see trends:
 motorVehicleData <-arrange(motorVehicleData,year)  #arrange by year, lowest to highest
 av1999 <- motorVehicleData %>% filter(year == "1999") %>%
   select(Emissions) %>% sapply(mean)
