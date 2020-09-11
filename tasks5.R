@@ -23,13 +23,31 @@ mobileSCC <- as.character(SCC$SCC[mobileCodeIndex])
 
 #Find codes in the Baltimore data and extract Emissions:
 motorVehicleData <- baltimore %>% filter(SCC %in% mobileSCC)%>%
-  select(Emissions,year)
+  select(year,Emissions)
+years <- unique(motorVehicleData$year)
 
+# find averages per year, because data values are too widely spred to see trends:
 motorVehicleData <-arrange(motorVehicleData,year)  #arrange by year, lowest to highest
 av1999 <- motorVehicleData %>% filter(year == "1999") %>%
-  select(Emissions)
+  select(Emissions) %>% sapply(mean)
+av2002 <- motorVehicleData %>% filter(year == "2002") %>%
+  select(Emissions) %>% sapply(mean)
+av2005 <- motorVehicleData %>% filter(year == "2005") %>%
+  select(Emissions) %>% sapply(mean)
+av2008 <- motorVehicleData %>% filter(year == "2008") %>%
+  select(Emissions) %>% sapply(mean)
+averages <- c(av1999,av2002,av2005,av2008)
 
-ggplot(motorVehicleData, aes(x = year,y = Emissions))+
-  geom_point()+
-  geom_smooth(method = "lm", color = rgb(.5,0,.5))
+# make plots
+png(filename = "plot5.png")
+p5 <-barplot(averages, col = rgb( .1,.5,.0,.2),
+        names.arg = c("1999","2002",2005,"2008"),
+        xlab = "Year",
+        ylab = "Emissions, tons",
+        main = "AVERAGE PM2.5 emissions from motor vehicles \n in Baltimore for specific years.",
+        sub = "Bar plot shows average PM2.5 per year does not linearly decline.")
+text(p5,averages*0.9,labels = round(averages,digits = 2))
+
+dev.off()
+
 
