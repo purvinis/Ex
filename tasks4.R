@@ -27,20 +27,23 @@ coalData <- NEI %>% filter(SCC %in% polluteCodes)%>%
 # Nonpoint source (NPS) areas of focus are driven by particular land uses, such as agriculture
 # Point source : any single identifiable source of pollution from which pollutants are discharged, 
 # such as a pipe, ditch, ship or factory smokestack.”
-plot(coalData$Emissions)
+# plot(coalData$Emissions) to see variations
 
 #plot data
-png(filename = "plot4.png")
 
-ggplot(coalData,aes(year,Emissions)) +
-  geom_density(aes(y=Emissions),color = "red", alpha = .3) +
-  facet_wrap(facets = vars(type), scales = "fixed")+
+p4 <-ggplot(coalData,aes(year,Emissions)) +
+  geom_point(aes(colour = SCC), size = 4, alpha = .3, show.legend = FALSE) +
+  facet_wrap(facets = vars(type), scales = "free_y")+
   scale_x_continuous("Year",breaks = c(1999,2002,2005,2008),labels = years)+
-  labs(title = "PM2.5 emissions in Baltimore by year and type",
-       subtitle = "Non-road, nonpoint, on-road sensors show net decrease in PM2.5.",
-       caption = "Scatter plot data is from individual sensors.Green bars
-       indicate year totals, in tons.")
+  geom_smooth(method = "lm", show.legend = FALSE, colour = "blue")+
+  labs(title = "PM2.5 emissions from coal and combustion processes in the US",
+       subtitle = "POINT sources (such as factories) produce many more
+       tons of PM2.5 than NONPOINT sources (such as agriculture)",
+       caption = "POINT emissions have decreased. NonPOINT emission have 
+       decreased as the outliers seem to have cleaned up.
+       Lineary Model trend line shown in blue.")
 
-
-
+png('plot4.png',width=480,height=480,units="px",bg = "transparent")
+print(p4)
 dev.off()
+
