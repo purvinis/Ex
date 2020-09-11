@@ -47,7 +47,6 @@ p5 <-barplot(averages, col = rgb( .1,.5,.0,.2),
         main = "AVERAGE PM2.5 emissions from motor vehicles \n in Baltimore for specific years.",
         sub = "Bar plot shows average PM2.5 per year does not linearly decline.")
 text(p5,averages*0.9,labels = round(averages,digits = 2))
-
 dev.off()
 
 
